@@ -26,7 +26,7 @@ class Options {
     /**
      * Enable integration with the Gradle Java plugin. This includes setting the default artifact to the jar task.
      */
-    boolean javaIntegration = true
+    boolean javaIntegration = false
 
     /**
      * Enable integration with the ForgeGradle plugin. This includes setting dependencies on the reobfuscation tasks.

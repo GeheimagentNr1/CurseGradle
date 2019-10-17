@@ -91,6 +91,15 @@ class Integration {
             String mcVersion = Iterables.getOnlyElement(mcConfig.dependencies).version
             curseProject.addGameVersion(mcVersion)
             curseProject.addGameVersion('Fabric')
+
+            def remapJar = project.tasks.findByName('remapJar')
+            if (curseProject.mainArtifact == null && remapJar != null) {
+                log.info "Setting main artifact for CurseForge Project $curseProject.id to Fabric remap jar"
+                CurseArtifact artifact = new CurseArtifact()
+                artifact.artifact = remapJar
+                curseProject.mainArtifact = artifact
+                curseProject.uploadTask.dependsOn remapJar
+            }
         }
     }
 }
