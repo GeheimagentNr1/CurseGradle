@@ -63,6 +63,9 @@ class CurseGradlePlugin implements Plugin<Project> {
                 if (ext.curseGradleOptions.forgeGradleIntegration) {
                     Integration.checkForgeGradle(project, curseProject)
                 }
+                if (ext.curseGradleOptions.fabricLoomIntegration) {
+                    Integration.checkFabric(project, curseProject)
+                }
 
                 curseProject.copyConfig()
 
@@ -81,14 +84,13 @@ class CurseGradlePlugin implements Plugin<Project> {
 
                 curseProject.validate()
 
-                if (curseProject.mainArtifact.artifact instanceof AbstractArchiveTask) {
-                    uploadTask.dependsOn curseProject.mainArtifact.artifact
+                if (curseProject.mainArtifact.artifact instanceof Task) {
+                    uploadTask.dependsOn((Task) curseProject.mainArtifact.artifact)
                 }
 
                 curseProject.additionalArtifacts.each { artifact ->
-                    if (artifact.artifact instanceof AbstractArchiveTask) {
-                        AbstractArchiveTask archiveTask = (AbstractArchiveTask) artifact.artifact
-                        uploadTask.dependsOn archiveTask
+                    if (artifact.artifact instanceof Task) {
+                        uploadTask.dependsOn((Task) artifact.artifact)
                     }
                 }
             }

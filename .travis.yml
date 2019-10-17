@@ -11,6 +11,9 @@ notifications:
   email: false
 jdk:
   - openjdk8
-before_install:
-  - chmod a+x gradlew
-script: ./gradlew clean check --scan -s
+git:
+  quiet: true
+script: "./gradlew build bintrayUpload -S -i"
+env:
+  global:
+    - TERM=dumb

@@ -21,7 +21,7 @@ class Options {
      * Enables Java version auto detection for Java 9 and beyond. Only applicable if {@link #javaVersionAutoDetect}
      * is enabled.
      */
-    boolean detectNewerJava = false
+    boolean detectNewerJava = true
 
     /**
      * Enable integration with the Gradle Java plugin. This includes setting the default artifact to the jar task.
@@ -31,5 +31,10 @@ class Options {
     /**
      * Enable integration with the ForgeGradle plugin. This includes setting dependencies on the reobfuscation tasks.
      */
-    boolean forgeGradleIntegration = true
+    boolean forgeGradleIntegration = false
+
+    /**
+     * Enable integration with the Fabric loom plugin. This includes setting dependencies on the reobfuscation tasks.
+     */
+    boolean fabricLoomIntegration = true
 }

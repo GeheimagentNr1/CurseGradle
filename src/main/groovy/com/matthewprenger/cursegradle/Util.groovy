@@ -11,9 +11,11 @@ import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClientBuilder
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.bundling.AbstractArchiveTask
+import org.gradle.util.DeferredUtil
 
 import static com.google.common.base.Preconditions.checkNotNull
 
@@ -37,8 +39,8 @@ class Util {
         if (obj instanceof File) {
             return (File) obj
         }
-        if (obj instanceof AbstractArchiveTask) {
-            return ((AbstractArchiveTask) obj).getArchivePath()
+        if (obj instanceof Task) {
+            return ((Task) obj).outputs.files.singleFile
         }
         return project.file(obj)
     }
@@ -52,9 +54,7 @@ class Util {
     static String resolveString(Object obj) {
         checkNotNull(obj)
 
-        while(obj instanceof Closure) {
-            obj = ((Closure)obj).call()
-        }
+        obj = DeferredUtil.unpack(obj)
 
         if (obj instanceof String) {
             return (String) obj
@@ -64,8 +64,8 @@ class Util {
             return data;
         }
 
-        if (obj instanceof AbstractArchiveTask) {
-            String data = new String(((File) ((AbstractArchiveTask) obj).archivePath).getText('UTF-8').getBytes('UTF-8'))
+        if (obj instanceof Task) {
+            String data = new String(((File) ((Task) obj).outputs.files.singleFile).getText('UTF-8').getBytes('UTF-8'))
             return data;
         }
 

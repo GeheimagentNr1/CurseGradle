@@ -59,7 +59,7 @@ class CurseVersions {
             final String version = obj.toString()
             int id = gameVersions.get(version)
             if (id == 0) {
-                throw new IllegalArgumentException("$version is not a valid game version. Valid versions are: ${gameVersions.keySet()}")
+                log.warn("$version is not a valid game version. Valid versions are: ${gameVersions.keySet()}")
             }
             set.add(id)
         }

@@ -1,5 +1,6 @@
 package com.matthewprenger.cursegradle
 
+import com.google.common.collect.Iterables
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -48,6 +49,9 @@ class Integration {
                 if (JavaVersion.VERSION_1_9.compareTo(javaVersion) >= 0) {
                     curseProject.addGameVersion('Java 9')
                 }
+                if (JavaVersion.VERSION_1_10.compareTo(javaVersion) >= 0) {
+                    curseProject.addGameVersion('Java 10')
+                }
             }
         } catch (Throwable t) {
             log.warn("Failed to check Java Version", t)
@@ -76,6 +80,17 @@ class Integration {
                     log.warn('Failed ForgeGradle integration', t)
                 }
             }
+        }
+    }
+    
+    static void checkFabric(Project project, CurseProject curseProject) {
+        def mcConfig = project.configurations.findByName("minecraft")
+        if (mcConfig != null) {
+            log.info "loom extension detected, adding integration..."
+
+            String mcVersion = Iterables.getOnlyElement(mcConfig.dependencies).version
+            curseProject.addGameVersion(mcVersion)
+            curseProject.addGameVersion('Fabric')
         }
     }
 }
