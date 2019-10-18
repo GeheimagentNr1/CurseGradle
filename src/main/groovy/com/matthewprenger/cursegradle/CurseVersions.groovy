@@ -60,8 +60,9 @@ class CurseVersions {
             int id = gameVersions.get(version)
             if (id == 0) {
                 log.warn("$version is not a valid game version. Valid versions are: ${gameVersions.keySet()}")
+            } else {
+                set.add(id)
             }
-            set.add(id)
         }
 
         return set.toArray()

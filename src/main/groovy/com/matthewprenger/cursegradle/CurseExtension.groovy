@@ -1,5 +1,7 @@
 package com.matthewprenger.cursegradle
 
+import org.gradle.api.Project
+
 class CurseExtension {
 
     /**
@@ -9,7 +11,11 @@ class CurseExtension {
 
     final Collection<CurseProject> curseProjects = new ArrayList<>()
 
-    Options curseGradleOptions = new Options()
+    Options curseGradleOptions
+
+    CurseExtension(Project project) {
+        curseGradleOptions = new Options(project)
+    }
 
     @Deprecated
     boolean getDebug() {

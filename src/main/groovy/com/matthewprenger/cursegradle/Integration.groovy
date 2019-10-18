@@ -82,18 +82,18 @@ class Integration {
             }
         }
     }
-    
-    static void checkFabric(Project project, CurseProject curseProject) {
+
+    static void checkFabric(Project project, boolean javaEnabled, CurseProject curseProject) {
         def mcConfig = project.configurations.findByName("minecraft")
         if (mcConfig != null) {
-            log.info "loom extension detected, adding integration..."
+            log.info "loom minecraft configuration detected, adding integration..."
 
             String mcVersion = Iterables.getOnlyElement(mcConfig.dependencies).version
             curseProject.addGameVersion(mcVersion)
             curseProject.addGameVersion('Fabric')
 
             def remapJar = project.tasks.findByName('remapJar')
-            if (curseProject.mainArtifact == null && remapJar != null) {
+            if ((curseProject.mainArtifact == null || (javaEnabled && isJavaDefaultJar(curseProject))) && remapJar != null) {
                 log.info "Setting main artifact for CurseForge Project $curseProject.id to Fabric remap jar"
                 CurseArtifact artifact = new CurseArtifact()
                 artifact.artifact = remapJar
@@ -101,5 +101,10 @@ class Integration {
                 curseProject.uploadTask.dependsOn remapJar
             }
         }
+    }
+
+    private static boolean isJavaDefaultJar(CurseProject curseProject) {
+        def artifact = curseProject.mainArtifact.artifact
+        return artifact instanceof Task && ((Task) artifact).getName() == "jar"
     }
 }

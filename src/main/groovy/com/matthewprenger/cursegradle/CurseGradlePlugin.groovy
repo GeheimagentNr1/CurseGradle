@@ -32,7 +32,7 @@ class CurseGradlePlugin implements Plugin<Project> {
         mainTask.description = "Uploads all CurseForge projects"
         mainTask.group = TASK_GROUP
 
-        extension = project.extensions.create(EXTENSION_NAME, CurseExtension)
+        extension = project.extensions.create(EXTENSION_NAME, CurseExtension, project)
 
         project.afterEvaluate {
             if (project.state.failure != null) {
@@ -64,7 +64,7 @@ class CurseGradlePlugin implements Plugin<Project> {
                     Integration.checkForgeGradle(project, curseProject)
                 }
                 if (ext.curseGradleOptions.fabricLoomIntegration) {
-                    Integration.checkFabric(project, curseProject)
+                    Integration.checkFabric(project, ext.curseGradleOptions.javaIntegration, curseProject)
                 }
 
                 curseProject.copyConfig()

@@ -1,5 +1,7 @@
 package com.matthewprenger.cursegradle
 
+import org.gradle.api.Project
+
 /**
  * Various options for CurseGradle. These affect the entire plugin and not just a single curse project.
  */
@@ -21,20 +23,33 @@ class Options {
      * Enables Java version auto detection for Java 9 and beyond. Only applicable if {@link #javaVersionAutoDetect}
      * is enabled.
      */
-    boolean detectNewerJava = true
+    boolean detectNewerJava
 
     /**
      * Enable integration with the Gradle Java plugin. This includes setting the default artifact to the jar task.
      */
-    boolean javaIntegration = false
+    boolean javaIntegration
 
     /**
      * Enable integration with the ForgeGradle plugin. This includes setting dependencies on the reobfuscation tasks.
      */
-    boolean forgeGradleIntegration = false
+    boolean forgeGradleIntegration
 
     /**
      * Enable integration with the Fabric loom plugin. This includes setting dependencies on the reobfuscation tasks.
      */
-    boolean fabricLoomIntegration = true
+    boolean fabricLoomIntegration
+
+    Options(Project project) {
+        def fg1 = project.plugins.hasPlugin("forge")
+        def fg2 = project.plugins.hasPlugin("net.minecraftforge.gradle.forge")
+        def fg3 = project.plugins.hasPlugin("net.minecraftforge.gradle")
+        def loom = project.plugins.hasPlugin("fabric-loom")
+        def java = project.plugins.hasPlugin("java")
+
+        detectNewerJava = !fg1 && !fg2
+        javaIntegration = java
+        forgeGradleIntegration = fg1 || fg2 || fg3
+        fabricLoomIntegration = loom
+    }
 }
