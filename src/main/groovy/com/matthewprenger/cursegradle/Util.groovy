@@ -15,7 +15,6 @@ import org.gradle.api.Task
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.bundling.AbstractArchiveTask
-import org.gradle.util.DeferredUtil
 
 import static com.google.common.base.Preconditions.checkNotNull
 
@@ -54,7 +53,9 @@ class Util {
     static String resolveString(Object obj) {
         checkNotNull(obj)
 
-        obj = DeferredUtil.unpack(obj)
+        while(obj instanceof Closure) {
+            obj = ((Closure)obj).call()
+        }
 
         if (obj instanceof String) {
             return (String) obj
