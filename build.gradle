@@ -6,9 +6,6 @@ plugins {
 }
 
 version = '1.4.0'
-if (isNullOrEmpty(System.getenv("TRAVIS_TAG")) && !isNullOrEmpty(System.getenv('TRAVIS_BUILD_NUMBER'))) {
-    version += '.' + System.getenv('TRAVIS_BUILD_NUMBER')
-}
 group = 'com.matthewprenger'
 description = 'Gradle plugin to upload artifacts to CurseForge'
 archivesBaseName = 'CurseGradle'
@@ -58,35 +55,4 @@ assemble.dependsOn javadocJar, sourcesJar
     it.options.encoding = 'UTF-8'
     it.options.deprecation = true
     it.options.fork = true
-}
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.getProperty('bintrayUser') : System.getenv('bintray_user')
-    key = project.hasProperty('bintrayKey') ? project.getProperty('bintrayKey') : System.getenv('bintray_key')
-    publish = true
-    override = true
-    publications = ['mavenJava']
-    pkg {
-        repo = "doublecart"
-        name = "CurseGradle"
-        user = bintray.user
-        userOrg = "liachmodded"
-        licenses = ["MIT"]
-        desc = project.description
-        websiteUrl = "https://github.com/liachmodded/CurseGradle"
-        issueTrackerUrl = "https://github.com/liachmodded/CurseGradle/issues"
-        vcsUrl = "https://github.com/liachmodded/CurseGradle.git"
-        publicDownloadNumbers = true
-
-        githubRepo = "liachmodded/CurseGradle"
-        version {
-            name = project.version
-            released = new Date()
-            if (!isNullOrEmpty(System.getenv("TRAVIS_TAG"))) {
-                vcsTag = System.getenv("TRAVIS_TAG")
-            } else {
-                vcsTag = ''
-            }
-        }
-    }
 }
