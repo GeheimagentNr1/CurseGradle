@@ -149,7 +149,7 @@ curseforge {
         releaseType = 'alpha'
 
         // A version must be added here for non-standard integrations
-        addGameVersion '1.16.5'
+        addGameVersion '1.16'
 
         mainArtifact(jar) {
             displayName = "My Test Plugin version $version"

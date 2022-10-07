@@ -13,8 +13,6 @@ import org.gradle.api.logging.Logging
 
 class CurseVersions {
 
-    private static Options curseGradleOptions
-
     private static final Logger log = Logging.getLogger(CurseVersions)
 
     private static final TObjectIntMap<String> gameVersions = new TObjectIntHashMap<>()
@@ -29,7 +27,8 @@ class CurseVersions {
 
         log.info 'Initializing CurseForge versions...'
 
-        curseGradleOptions = new Options(project)
+        CurseExtension ext = project.extensions.getByType(CurseExtension)
+        Options curseGradleOptions = ext.curseGradleOptions
 
         try {
             TIntSet validVersionTypes = new TIntHashSet()
