@@ -38,8 +38,8 @@ configurations {
 }
 
 dependencies {
-    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.16.5-R0.1-SNAPSHOT'
-    compile group: 'org.spigotmc', name: 'spigot', version: '1.16.5-R0.1-SNAPSHOT'
+    implementation group: 'org.spigotmc', name: 'spigot-api', version: '1.16.5-R0.1-SNAPSHOT'
+    implementation group: 'org.spigotmc', name: 'spigot', version: '1.16.5-R0.1-SNAPSHOT'
 }
 
 compileJava.dependsOn {
@@ -75,7 +75,7 @@ task extractDependencyPlugins(type: Copy) {
 task prepareDevServer(dependsOn: ['buildSpigot', 'setupDevServer', 'copyPluginToTestserver', 'extractDependencyPlugins']) {}
 
 task startDevServer(dependsOn: [prepareDevServer], type: JavaExec) {
-	classpath configurations.compile, configurations.runtime
+	classpath configurations.compileClasspath, configurations.runtimeClasspath
     main = 'org.bukkit.craftbukkit.Main'
     workingDir = 'run'
 	standardInput = System.in
