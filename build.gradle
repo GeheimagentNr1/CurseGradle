@@ -1,20 +1,25 @@
 plugins {
     id 'groovy'
     id 'idea'
-    id 'com.gradle.plugin-publish' version '0.12.0'
-    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'com.gradle.plugin-publish' version '1.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-version = '1.4.0'
-group = 'com.matthewprenger'
-description = 'Gradle plugin to upload artifacts to CurseForge'
+ext {
+    inceptionYear = '2015'
+    url = 'https://github.com/CDAGaming/CurseGradle'
+}
+
+version = '1.5.0'
+group = 'com.cdagaming'
+description = '(Updated Fork) Gradle plugin to upload artifacts to CurseForge'
 archivesBaseName = 'CurseGradle'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -32,6 +37,10 @@ jar.manifest.mainAttributes([
         'Implementation-Title'  : project.name,
         'Implementation-Version': project.version
 ])
+
+shadowJar {
+    archiveClassifier.set('')
+}
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
@@ -55,4 +64,22 @@ assemble.dependsOn javadocJar, sourcesJar
     it.options.encoding = 'UTF-8'
     it.options.deprecation = true
     it.options.fork = true
+}
+
+pluginBundle {
+    website = project.url
+    vcsUrl = 'https://github.com/CDAGaming/CurseGradle'
+    tags = ['curseforge', 'publish', 'minecraft']
+}
+
+gradlePlugin {
+    plugins {
+        curseGradlePlugin {
+            id = 'com.cdagaming.cursegradle'
+            implementationClass = 'com.matthewprenger.cursegradle.CurseGradlePlugin'
+            description = project.description
+            displayName = 'CurseGradle'
+            version = project.version
+        }
+    }
 }
