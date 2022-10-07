@@ -9,7 +9,7 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'com.cdagaming.cursegradle'
 
 version = '1.0'
 group = 'com.matthewprenger.cursegradletestmod'
