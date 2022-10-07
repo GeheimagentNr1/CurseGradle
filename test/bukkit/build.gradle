@@ -148,6 +148,9 @@ curseforge {
         changelog = 'Changes'
         releaseType = 'alpha'
 
+        // A version must be added here for non-standard integrations
+        addGameVersion '1.16.5'
+
         mainArtifact(jar) {
             displayName = "My Test Plugin version $version"
         }
