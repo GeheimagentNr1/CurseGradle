@@ -63,8 +63,9 @@ class CurseGradlePlugin implements Plugin<Project> {
                 uploadTask.projectId = curseProject.id
 
                 CurseExtension ext = project.extensions.getByType(CurseExtension)
-                final boolean isMCExclude = (!ext.curseGradleOptions.forgeGradleIntegration || !ext.curseGradleOptions.genericIntegration)
-                final boolean isMC = (!ext.curseGradleOptions.bukkitIntegration || !ext.curseGradleOptions.genericIntegration)
+                final boolean isGeneric = ext.curseGradleOptions.genericIntegration
+                final boolean isBukkit = ext.curseGradleOptions.bukkitIntegration && !ext.curseGradleOptions.genericIntegration
+                final boolean isMC = (!isBukkit && !isGeneric)
 
                 if (ext.curseGradleOptions.javaVersionAutoDetect && isMC) {
                     Integration.checkJavaVersion(project, curseProject)
@@ -81,7 +82,7 @@ class CurseGradlePlugin implements Plugin<Project> {
                 }
 
                 API_BASE_URL = ext.curseGradleOptions.apiBaseUrl
-                if (ext.curseGradleOptions.bukkitIntegration && isMCExclude) {
+                if (isBukkit) {
                     API_BASE_URL = 'https://dev.bukkit.org'
                 }
 
