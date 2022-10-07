@@ -1,5 +1,4 @@
 import de.undercouch.gradle.tasks.download.Download
-import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     repositories {
@@ -76,7 +75,7 @@ task prepareDevServer(dependsOn: ['buildSpigot', 'setupDevServer', 'copyPluginTo
 
 task startDevServer(dependsOn: [prepareDevServer], type: JavaExec) {
 	classpath configurations.compileClasspath, configurations.runtimeClasspath
-    main = 'org.bukkit.craftbukkit.Main'
+    mainClass.set('org.bukkit.craftbukkit.Main')
     workingDir = 'run'
 	standardInput = System.in
 }
@@ -88,12 +87,12 @@ task setupWorkspace(dependsOn: ['buildSpigot']) {
 
 task buildSpigot(type: JavaExec) {
 	if (hasSpigot()) {
-		enabled = false;
-		dependsOn = [];
+		enabled = false
+		dependsOn = []
 	} else {
 		dependsOn = ['cleanSpigotBuild', 'downloadBuildTool']
 	}
-	main = '-jar'
+	mainClass.set('-jar')
 	args new File(spigotBuildDir, 'BuildTools.jar').getAbsolutePath(), '--rev', '1.16.5'
 	workingDir = spigotBuildDir
 }
