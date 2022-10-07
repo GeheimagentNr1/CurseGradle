@@ -35,54 +35,7 @@ class Integration {
         try {
             JavaPluginExtension javaConv = project.getExtensions().getByType(JavaPluginExtension.class)
             JavaVersion javaVersion = JavaVersion.toVersion(javaConv.getTargetCompatibility())
-
-            if (JavaVersion.VERSION_1_6 >= javaVersion) {
-                curseProject.addGameVersion('Java 6')
-            }
-            if (JavaVersion.VERSION_1_7 >= javaVersion) {
-                curseProject.addGameVersion('Java 7')
-            }
-            if (JavaVersion.VERSION_1_8 >= javaVersion) {
-                curseProject.addGameVersion('Java 8')
-            }
-            if (project.extensions.getByType(CurseExtension).curseGradleOptions.detectNewerJava) {
-                if (JavaVersion.VERSION_1_9 >= javaVersion) {
-                    curseProject.addGameVersion('Java 9')
-                }
-                if (JavaVersion.VERSION_1_10 >= javaVersion) {
-                    curseProject.addGameVersion('Java 10')
-                }
-                if (JavaVersion.VERSION_11 >= javaVersion) {
-                    curseProject.addGameVersion('Java 11')
-                }
-                if (JavaVersion.VERSION_12 >= javaVersion) {
-                    curseProject.addGameVersion('Java 12')
-                }
-                if (JavaVersion.VERSION_13 >= javaVersion) {
-                    curseProject.addGameVersion('Java 13')
-                }
-                if (JavaVersion.VERSION_14 >= javaVersion) {
-                    curseProject.addGameVersion('Java 14')
-                }
-                if (JavaVersion.VERSION_15 >= javaVersion) {
-                    curseProject.addGameVersion('Java 15')
-                }
-                if (JavaVersion.VERSION_16 >= javaVersion) {
-                    curseProject.addGameVersion('Java 16')
-                }
-                if (JavaVersion.VERSION_17 >= javaVersion) {
-                    curseProject.addGameVersion('Java 17')
-                }
-                if (JavaVersion.VERSION_18 >= javaVersion) {
-                    curseProject.addGameVersion('Java 18')
-                }
-                if (JavaVersion.VERSION_19 >= javaVersion) {
-                    curseProject.addGameVersion('Java 19')
-                }
-                if (JavaVersion.VERSION_20 >= javaVersion) {
-                    curseProject.addGameVersion('Java 20')
-                }
-            }
+            curseProject.addGameVersion(String.format('Java %s', javaVersion.getMajorVersion()))
         } catch (Throwable t) {
             log.warn("Failed to check Java Version", t)
         }
