@@ -12,7 +12,7 @@ import org.gradle.api.logging.Logging
 
 class CurseVersions {
 
-    Options curseGradleOptions = new Options()
+    private static final Options curseGradleOptions = new Options()
 
     private static final Logger log = Logging.getLogger(CurseVersions)
 
