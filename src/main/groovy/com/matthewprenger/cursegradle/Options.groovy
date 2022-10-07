@@ -25,6 +25,11 @@ class Options {
     boolean javaIntegration
 
     /**
+     * Enable integration with the Bukkit plugin. This includes setting the default apiBaseUrl.
+     */
+    boolean bukkitIntegration = false
+
+    /**
      * Enable integration with the ForgeGradle plugin. This includes setting dependencies on the reobfuscation tasks.
      */
     boolean forgeGradleIntegration
@@ -33,6 +38,16 @@ class Options {
      * Enable integration with the Fabric loom plugin. This includes setting dependencies on the reobfuscation tasks.
      */
     boolean fabricLoomIntegration
+
+    /**
+     * Enable integration with generic endpoints. This requires setting the default apiBaseUrl.
+     */
+    boolean genericIntegration = false
+
+    /**
+     * The api base url of the curse forge project
+     */
+    String apiBaseUrl = 'https://minecraft.curseforge.com'
 
     Options(Project project) {
         def fg1 = project.plugins.hasPlugin("forge")
@@ -44,5 +59,9 @@ class Options {
         javaIntegration = java
         forgeGradleIntegration = fg1 || fg2 || fg3
         fabricLoomIntegration = loom
+    }
+
+    Options() {
+        // Backwards Compatibility, Limited Support
     }
 }

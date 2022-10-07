@@ -15,10 +15,22 @@ class CurseGradlePlugin implements Plugin<Project> {
     static final Set<String> VALID_RELEASE_TYPES = ['alpha', 'beta', 'release']
     static final Set<String> VALID_RELATIONS = ['requiredDependency', 'embeddedLibrary', 'optionalDependency', 'tool', 'incompatible']
 
-    static final String API_BASE_URL = 'https://minecraft.curseforge.com'
-    static final String VERSION_TYPES_URL = "$API_BASE_URL/api/game/version-types"
-    static final String VERSION_URL = "$API_BASE_URL/api/game/versions"
-    static final String UPLOAD_URL = "$API_BASE_URL/api/projects/%s/upload-file"
+    static String API_BASE_URL;
+    static String getApiBaseUrl() {
+        return API_BASE_URL
+    }
+
+    static String getVersionTypesUrl() {
+        return "$API_BASE_URL/api/game/version-types"
+    }
+
+    static String getVersionUrl() {
+        return "$API_BASE_URL/api/game/versions"
+    }
+
+    static String getUploadUrl() {
+        return "$API_BASE_URL/api/projects/%s/upload-file"
+    }
 
     Project project
     CurseExtension extension
@@ -51,19 +63,26 @@ class CurseGradlePlugin implements Plugin<Project> {
                 uploadTask.projectId = curseProject.id
 
                 CurseExtension ext = project.extensions.getByType(CurseExtension)
+                final boolean isMCExclude = (!ext.curseGradleOptions.forgeGradleIntegration || !ext.curseGradleOptions.genericIntegration)
+                final boolean isMC = (!ext.curseGradleOptions.bukkitIntegration || !ext.curseGradleOptions.genericIntegration)
 
-                if (ext.curseGradleOptions.javaVersionAutoDetect) {
+                if (ext.curseGradleOptions.javaVersionAutoDetect && isMC) {
                     Integration.checkJavaVersion(project, curseProject)
                 }
 
-                if (ext.curseGradleOptions.javaIntegration) {
+                if (ext.curseGradleOptions.javaIntegration && isMC) {
                     Integration.checkJava(project, curseProject)
                 }
-                if (ext.curseGradleOptions.forgeGradleIntegration) {
+                if (ext.curseGradleOptions.forgeGradleIntegration && isMC) {
                     Integration.checkForgeGradle(project, curseProject)
                 }
-                if (ext.curseGradleOptions.fabricLoomIntegration) {
+                if (ext.curseGradleOptions.fabricLoomIntegration && isMC) {
                     Integration.checkFabric(project, ext.curseGradleOptions.javaIntegration, curseProject)
+                }
+
+                API_BASE_URL = ext.curseGradleOptions.apiBaseUrl
+                if (ext.curseGradleOptions.bukkitIntegration && isMCExclude) {
+                    API_BASE_URL = 'https://dev.bukkit.org'
                 }
 
                 curseProject.copyConfig()
