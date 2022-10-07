@@ -7,12 +7,13 @@ import gnu.trove.map.TObjectIntMap
 import gnu.trove.map.hash.TObjectIntHashMap
 import gnu.trove.set.TIntSet
 import gnu.trove.set.hash.TIntHashSet
+import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 
 class CurseVersions {
 
-    private static final Options curseGradleOptions = new Options()
+    private static Options curseGradleOptions
 
     private static final Logger log = Logging.getLogger(CurseVersions)
 
@@ -22,11 +23,13 @@ class CurseVersions {
      * Load the valid game versions from CurseForge
      * @param apiKey The api key to use to connect to CurseForge
      */
-    static void initialize(String apiKey) {
+    static void initialize(String apiKey, Project project) {
 
         gameVersions.clear()
 
         log.info 'Initializing CurseForge versions...'
+
+        curseGradleOptions = new Options(project)
 
         try {
             TIntSet validVersionTypes = new TIntHashSet()

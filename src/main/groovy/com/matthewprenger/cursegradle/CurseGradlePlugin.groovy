@@ -15,7 +15,7 @@ class CurseGradlePlugin implements Plugin<Project> {
     static final Set<String> VALID_RELEASE_TYPES = ['alpha', 'beta', 'release']
     static final Set<String> VALID_RELATIONS = ['requiredDependency', 'embeddedLibrary', 'optionalDependency', 'tool', 'incompatible']
 
-    static String API_BASE_URL;
+    static String API_BASE_URL
     static String getApiBaseUrl() {
         return API_BASE_URL
     }

@@ -60,8 +60,4 @@ class Options {
         forgeGradleIntegration = fg1 || fg2 || fg3
         fabricLoomIntegration = loom
     }
-
-    Options() {
-        // Backwards Compatibility, Limited Support
-    }
 }

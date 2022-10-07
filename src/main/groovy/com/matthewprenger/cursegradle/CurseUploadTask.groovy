@@ -40,7 +40,7 @@ class CurseUploadTask extends DefaultTask {
 
         mainArtifact.resolve(project)
 
-        CurseVersions.initialize(apiKey)
+        CurseVersions.initialize(apiKey, project)
         mainArtifact.gameVersions = CurseVersions.resolveGameVersion(mainArtifact.gameVersionStrings)
 
         final String json = Util.gson.toJson(mainArtifact)
