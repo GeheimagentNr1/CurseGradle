@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
 plugins {
     id 'groovy'
     id 'idea'
@@ -10,7 +12,7 @@ ext {
     url = 'https://github.com/CDAGaming/CurseGradle'
 }
 
-version = '1.5.3'
+version = '1.5.4'
 group = 'io.github.CDAGaming'
 description = '(Updated Fork) Gradle plugin to upload artifacts to CurseForge'
 archivesBaseName = 'CurseGradle'
@@ -41,6 +43,12 @@ jar.manifest.mainAttributes([
 shadowJar {
     archiveClassifier.set('')
 }
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = "external"
+}
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
