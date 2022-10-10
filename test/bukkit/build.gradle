@@ -16,7 +16,7 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'io.github.CDAGaming.cursegradle'
 
 repositories {
 	mavenLocal()
