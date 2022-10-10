@@ -10,8 +10,8 @@ ext {
     url = 'https://github.com/CDAGaming/CurseGradle'
 }
 
-version = '1.5.1'
-group = 'com.cdagaming'
+version = '1.5.2'
+group = 'io.github.CDAGaming'
 description = '(Updated Fork) Gradle plugin to upload artifacts to CurseForge'
 archivesBaseName = 'CurseGradle'
 
@@ -75,7 +75,7 @@ pluginBundle {
 gradlePlugin {
     plugins {
         curseGradlePlugin {
-            id = 'com.cdagaming.cursegradle'
+            id = 'io.github.CDAGaming.cursegradle'
             implementationClass = 'com.matthewprenger.cursegradle.CurseGradlePlugin'
             description = project.description
             displayName = 'CurseGradle'
