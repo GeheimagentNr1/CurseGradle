@@ -5,11 +5,11 @@
 A gradle plugin for publishing artifacts to [CurseForge](https://curseforge.com/).
 
 * [Discord](https://discord.com/invite/BdKkbpP)
-* [Wiki](https://github.com/matthewprenger/CurseGradle/wiki/)
+* [Wiki](https://github.com/CDAGaming/CurseGradle/wiki/)
 * [Changelog](https://github.com/matthewprenger/CurseGradle/releases)
 
 ## Quickstart
-The following script is the bare-minimum. For more details about customization, check out the [Wiki](https://github.com/matthewprenger/CurseGradle/wiki).
+The following script is the bare-minimum. For more details about customization, check out the [Wiki](https://github.com/CDAGaming/CurseGradle/wiki).
 
 To find out which versions are available, check [HERE](https://plugins.gradle.org/plugin/io.github.CDAGaming.cursegradle).
 
