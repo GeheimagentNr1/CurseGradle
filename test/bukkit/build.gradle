@@ -152,15 +152,15 @@ curseforge {
         addGameVersion '1.16'
 
         mainArtifact(jar) {
-            displayName = "My Test Plugin version $version"
+            it.displayName = "My Test Plugin version $version"
         }
 
         addArtifact(javadocJar) {
-            displayName = "My Test Plugin Javadoc version $version"
+            it.displayName = "My Test Plugin Javadoc version $version"
         }
 
         addArtifact(sourcesJar) {
-            displayName = "My Test Plugin Sources version $version"
+            it.displayName = "My Test Plugin Sources version $version"
         }
     }
 }
