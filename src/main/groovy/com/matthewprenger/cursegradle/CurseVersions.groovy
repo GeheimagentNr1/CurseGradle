@@ -40,7 +40,8 @@ class CurseVersions {
                 if (
                         (type.slug.startsWith('minecraft') || type.slug == 'java' || type.slug == 'modloader') ||
                         (curseGradleOptions.bukkitIntegration && type.slug == 'bukkit') ||
-                        (curseGradleOptions.genericIntegration && type.slug == 'game')
+                        (curseGradleOptions.genericIntegration && type.slug == 'game') ||
+                        type.slug == 'client' || type.slug == 'server'
                 ) {
                     validVersionTypes.add(type.id)
                 }
